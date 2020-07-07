@@ -29,7 +29,7 @@ library(plotly)
 
 theme_set(theme_minimal(15) +
             theme(legend.position = "bottom",
-                  panel.grid.major.x = element_line(colour = "gray60"),
+                  panel.grid.major.x = element_line(color = "gray60"),
                   panel.grid.minor.x = element_blank(),
                   panel.grid.major.y = element_blank())
           )
@@ -97,23 +97,12 @@ brief_self_plot <- ggplot(brief_self_tidy, aes(`Scale/Index`, `Response`)) +
   scale_y_continuous(limits = c(30, 90),
                      breaks = c(30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90)) +
   geom_text_repel(aes(label = `Response`)) +
-  theme(panel.grid.major.y = element_blank(),
-        panel.grid.minor.x = element_blank(),
-        panel.grid.major.x = element_line(color = "gray80")) +
-  theme(plot.title = element_text(color = "black", size = 12, face = "bold", hjust = 0.5),
-        plot.subtitle = element_text(color = "black", size = 10, face = "bold"),
-        axis.text.x = element_text(size = 10),
-        axis.text.y = element_text(size = 10),
-        axis.title=element_text(size=10),
-        strip.text = element_text(size = 10),
-        plot.caption = element_text(size = 10),
-        legend.title = element_text(size = 12),
-        legend.text = element_text(size = 10),
-        legend.position = "bottom") +
+  theme(plot.title = element_text(color = "black", face = "bold", hjust = 0.5),
+        plot.subtitle = element_text(color = "black", face = "bold")) +
   labs(x = "",
        y = "",
-    title = "BRIEF-2 Self-Report",
-    subtitle = "Scores Greater than 65 are Considered Clinically Significant")
+       title = "BRIEF-2 Self-Report",
+       subtitle = "Scores Greater than 65 are Considered Clinically Significant")
 
 brief_self_plot
 
@@ -136,23 +125,12 @@ brief_parent_plot <- ggplot(brief_parent_tidy, aes(`Scale/Index`, `Response`)) +
   scale_y_continuous(limits = c(30, 90),
                      breaks = c(30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90)) +
   geom_text_repel(aes(label = `Response`)) +
-  theme(panel.grid.major.y = element_blank(),
-        panel.grid.minor.x = element_blank(),
-        panel.grid.major.x = element_line(color = "gray80")) +
-  theme(plot.title = element_text(color = "black", size = 12, face = "bold", hjust = 0.5),
-        plot.subtitle = element_text(color = "black", size = 10, face = "bold"),
-        axis.text.x = element_text(size = 10),
-        axis.text.y = element_text(size = 10),
-        axis.title=element_text(size=10),
-        strip.text = element_text(size = 10),
-        plot.caption = element_text(size = 10),
-        legend.title = element_text(size = 12),
-        legend.text = element_text(size = 10),
-        legend.position = "bottom") +
+  theme(plot.title = element_text(color = "black", face = "bold", hjust = 0.5),
+        plot.subtitle = element_text(color = "black", face = "bold")) +
   labs(x = "",
        y = "",
-    title = "BRIEF-2 Parent-Report",
-    subtitle = "Scores Greater than 65 are Considered Clinically Significant")
+       title = "BRIEF-2 Parent-Report",
+       subtitle = "Scores Greater than 65 are Considered Clinically Significant")
 
 brief_parent_plot
 ```
@@ -213,22 +191,11 @@ class_self_1_plot <- ggplot(class_self_1_tidy, aes(`Question`, `Response`)) +
   coord_flip() +
   scale_x_discrete(limits = class_1) +
   scale_y_discrete(limits = class_1_resp) +
-  theme(panel.grid.major.y = element_blank(),
-        panel.grid.minor.x = element_blank(),
-        panel.grid.major.x = element_line(color = "gray80")) +
-  theme(plot.title = element_text(color = "black", size = 12, face = "bold", hjust = 0.5),
-        plot.subtitle = element_text(color = "black", size = 10, face = "bold"),
-        axis.text.x = element_text(size = 10, angle = 90),
-        axis.text.y = element_text(size = 10),
-        axis.title=element_text(size=10),
-        strip.text = element_text(size = 10),
-        plot.caption = element_text(size = 10),
-        legend.title = element_text(size = 12),
-        legend.text = element_text(size = 10),
-        legend.position = "bottom") +
+  theme(plot.title = element_text(color = "black", face = "bold", hjust = 0.5),
+        plot.subtitle = element_text(color = "black", face = "bold")) +
   labs(x = "",
        y = "",
-    title = "CLASS Responses",
+       title = "CLASS Responses",
        subtitle = "Questions 1-14")
 
 class_self_1_plot
@@ -261,27 +228,14 @@ class_self_2_plot <- ggplot(class_self_2_tidy, aes(`Question`, `Response`)) +
   coord_flip() +
   scale_x_discrete(limits = class_2) +
   scale_y_discrete(limits = class_2_resp) +
-  theme(panel.grid.major.y = element_blank(),
-        panel.grid.minor.x = element_blank(),
-        panel.grid.major.x = element_line(color = "gray80")) +
-  theme(plot.title = element_text(color = "black", size = 12, face = "bold", hjust = 0.5),
-        plot.subtitle = element_text(color = "black", size = 10, face = "bold"),
-        axis.text.x = element_text(size = 10, angle = 90),
-        axis.text.y = element_text(size = 10),
-        axis.title=element_text(size=10),
-        strip.text = element_text(size = 10),
-        plot.caption = element_text(size = 10),
-        legend.title = element_text(size = 12),
-        legend.text = element_text(size = 10),
-        legend.position = "bottom") +
+  theme(plot.title = element_text(color = "black", face = "bold", hjust = 0.5),
+        plot.subtitle = element_text(color = "black", face = "bold")) +
   labs(x = "",
        y = "",
-    title = "CLASS Responses",
+       title = "CLASS Responses",
        subtitle = "Questions 15-20")
 
 class_self_2_plot
-
-
 
 class_parent_1_tidy <- class_parent_1 %>% 
   pivot_longer(
@@ -300,22 +254,11 @@ class_parent_1_plot <- ggplot(class_parent_1_tidy, aes(`Question`, `Response`)) 
   coord_flip() +
   scale_x_discrete(limits = class_1) +
   scale_y_discrete(limits = class_1_resp) +
-  theme(panel.grid.major.y = element_blank(),
-        panel.grid.minor.x = element_blank(),
-        panel.grid.major.x = element_line(color = "gray80")) +
-  theme(plot.title = element_text(color = "black", size = 12, face = "bold", hjust = 0.5),
-        plot.subtitle = element_text(color = "black", size = 10, face = "bold"),
-        axis.text.x = element_text(size = 10, angle = 90),
-        axis.text.y = element_text(size = 10),
-        axis.title=element_text(size=10),
-        strip.text = element_text(size = 10),
-        plot.caption = element_text(size = 10),
-        legend.title = element_text(size = 12),
-        legend.text = element_text(size = 10),
-        legend.position = "bottom") +
+  theme(plot.title = element_text(color = "black", face = "bold", hjust = 0.5),
+        plot.subtitle = element_text(color = "black", face = "bold")) +
   labs(x = "",
        y = "",
-    title = "CLASS Responses",
+       title = "CLASS Responses",
        subtitle = "Questions 1-14")
 
 class_parent_1_plot
@@ -336,19 +279,8 @@ class_parent_2_plot <- ggplot(class_parent_2_tidy, aes(`Question`, `Response`)) 
   coord_flip() +
   scale_x_discrete(limits = class_2) +
   scale_y_discrete(limits = class_2_resp) +
-  theme(panel.grid.major.y = element_blank(),
-        panel.grid.minor.x = element_blank(),
-        panel.grid.major.x = element_line(color = "gray80")) +
-  theme(plot.title = element_text(color = "black", size = 12, face = "bold", hjust = 0.5),
-        plot.subtitle = element_text(color = "black", size = 10, face = "bold"),
-        axis.text.x = element_text(size = 10, angle = 90),
-        axis.text.y = element_text(size = 10),
-        axis.title=element_text(size=10),
-        strip.text = element_text(size = 10),
-        plot.caption = element_text(size = 10),
-        legend.title = element_text(size = 12),
-        legend.text = element_text(size = 10),
-        legend.position = "bottom") +
+  theme(plot.title = element_text(color = "black", face = "bold", hjust = 0.5),
+        plot.subtitle = element_text(color = "black", face = "bold")) +
   labs(x = "",
        y = "",
     title = "CLASS Responses",
@@ -365,7 +297,7 @@ class_self_1_plot
 
 ### CLASS Self 2
 
-```{r, include=TRUE, fig.height=10, fig.width=10}
+```{r, include=TRUE, fig.height=10, fig.width=11}
 class_self_2_plot
 ```
 
@@ -377,6 +309,6 @@ class_parent_1_plot
 
 ### CLASS parent 2
 
-```{r, include=TRUE, fig.height=10, fig.width=10}
+```{r, include=TRUE, fig.height=10, fig.width=11}
 class_parent_2_plot
 ```
