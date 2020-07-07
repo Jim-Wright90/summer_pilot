@@ -1,0 +1,382 @@
+---
+title: "Summer Pilot 2020"
+author: "Devon Blitz, Eli Lowham, Jim Wright"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    theme: spacelab
+    highlight: tango
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+```
+
+```{r setup 1, include=FALSE}
+library(tidyverse)
+library(rio)
+library(here)
+library(colorblindr)
+library(gghighlight)
+library(forcats)
+library(ggrepel)
+library(gt)
+library(knitr)
+library(kableExtra)
+library(reactable)
+library(plotly)
+
+theme_set(theme_minimal(15) +
+            theme(legend.position = "bottom",
+                  panel.grid.major.x = element_line(colour = "gray60"),
+                  panel.grid.minor.x = element_blank(),
+                  panel.grid.major.y = element_blank())
+          )
+
+brief_parent <- import(here("data", "suma_brief_parent.xlsx"),
+               setclass = "tbl_df") 
+ 
+brief_self <- import(here("data", "suma_brief_self.xlsx"),
+               setclass = "tbl_df") 
+
+class_self_1 <- import(here("data", "suma_class_self_1.xlsx"),
+               setclass = "tbl_df") 
+
+class_self_2 <- import(here("data", "suma_class_self_2.xlsx"),
+               setclass = "tbl_df") 
+
+class_parent_1 <- import(here("data", "suma_class_parent_1.xlsx"),
+               setclass = "tbl_df") 
+
+class_parent_2 <- import(here("data", "suma_class_parent_2.xlsx"),
+               setclass = "tbl_df") 
+
+```
+
+
+# Outcome Measures 
+
+## BRIEF-2 {.tabset .tabset-fade .tabset-pills}
+
+```{r, include=FALSE}
+head(brief_parent)
+head(brief_self)
+
+brief_self_tidy <- brief_self %>% 
+  pivot_longer(
+    cols = c(`Pre-Test`, `Post-Test`),
+    names_to = "Assessment",
+    values_to = "Response"
+  )
+
+head(brief_self_tidy)
+
+brief_scales <- c("Global Executive Composite",
+                  "Cognitive Regulation Index",
+                  "Organization Scale",
+                  "Task Completion Scale",
+                  "Plan/Organize Scale",
+                  "Working Memory Scale",
+                  "Initiate Scale",
+                  "Emotional Regulation Index",
+                  "Emotional Control Scale",
+                  "Shift Scale",
+                  "Behavior Regulation Index",
+                  "Self-Monitor Scale",
+                  "Inhibit Scale")
+
+brief_self_tidy$Assessment <- factor(brief_self_tidy$Assessment, levels = c("Pre-Test",
+                                                                            "Post-Test"))
+
+brief_self_plot <- ggplot(brief_self_tidy, aes(`Scale/Index`, `Response`)) +
+  geom_line(aes(group = `Scale/Index`), color = "gray40") +
+  geom_point(aes(color = `Assessment`)) +
+  coord_flip() +
+  scale_x_discrete(limits = brief_scales) +
+  scale_y_continuous(limits = c(30, 90),
+                     breaks = c(30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90)) +
+  geom_text_repel(aes(label = `Response`)) +
+  theme(panel.grid.major.y = element_blank(),
+        panel.grid.minor.x = element_blank(),
+        panel.grid.major.x = element_line(color = "gray80")) +
+  theme(plot.title = element_text(color = "black", size = 12, face = "bold", hjust = 0.5),
+        plot.subtitle = element_text(color = "black", size = 10, face = "bold"),
+        axis.text.x = element_text(size = 10),
+        axis.text.y = element_text(size = 10),
+        axis.title=element_text(size=10),
+        strip.text = element_text(size = 10),
+        plot.caption = element_text(size = 10),
+        legend.title = element_text(size = 12),
+        legend.text = element_text(size = 10),
+        legend.position = "bottom") +
+  labs(x = "",
+       y = "",
+    title = "BRIEF-2 Self-Report",
+    subtitle = "Scores Greater than 65 are Considered Clinically Significant")
+
+brief_self_plot
+
+
+brief_parent_tidy <- brief_parent %>% 
+  pivot_longer(
+    cols = c(`Pre-Test`, `Post-Test`),
+    names_to = "Assessment",
+    values_to = "Response"
+  )
+
+brief_parent_tidy$Assessment <- factor(brief_parent_tidy$Assessment, levels = c("Pre-Test",
+                                                                                "Post-Test"))
+
+brief_parent_plot <- ggplot(brief_parent_tidy, aes(`Scale/Index`, `Response`)) +
+  geom_line(aes(group = `Scale/Index`), color = "gray40") +
+  geom_point(aes(color = `Assessment`)) +
+  coord_flip() +
+  scale_x_discrete(limits = brief_scales) +
+  scale_y_continuous(limits = c(30, 90),
+                     breaks = c(30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90)) +
+  geom_text_repel(aes(label = `Response`)) +
+  theme(panel.grid.major.y = element_blank(),
+        panel.grid.minor.x = element_blank(),
+        panel.grid.major.x = element_line(color = "gray80")) +
+  theme(plot.title = element_text(color = "black", size = 12, face = "bold", hjust = 0.5),
+        plot.subtitle = element_text(color = "black", size = 10, face = "bold"),
+        axis.text.x = element_text(size = 10),
+        axis.text.y = element_text(size = 10),
+        axis.title=element_text(size=10),
+        strip.text = element_text(size = 10),
+        plot.caption = element_text(size = 10),
+        legend.title = element_text(size = 12),
+        legend.text = element_text(size = 10),
+        legend.position = "bottom") +
+  labs(x = "",
+       y = "",
+    title = "BRIEF-2 Parent-Report",
+    subtitle = "Scores Greater than 65 are Considered Clinically Significant")
+
+brief_parent_plot
+```
+
+### BRIEF-2 Self-Report
+
+```{r, include=TRUE, fig.height=10, fig.width=10}
+brief_self_plot
+```
+
+### BRIEF-2  Parent-Report
+
+```{r, include=TRUE, fig.height=10, fig.width=10}
+brief_parent_plot
+```
+
+## CLASS {.tabset .tabset-fade .tabset-pills}
+
+```{r, include=FALSE}
+head(class_self_1)
+head(class_self_2)
+head(class_parent_1)
+head(class_parent_2)
+
+class_self_1_tidy <- class_self_1 %>% 
+  pivot_longer(
+    cols = c(`Pre-Test`, `Post-Test`),
+    names_to = "Assessment",
+    values_to = "Response"
+  )
+
+class_1 <- c("Easily bothered by lights/screens or noise",
+             "Tiring easily during homework",
+             "Tiring easily during the school day",
+             "Headaches interfering with homework",
+             "Headaches interfering with classwork",
+             "Easily distracted during homework",
+             "Easily distracted during classwork",
+             "Trouble reading",
+             "Trouble remembering what was studied",
+             "Difficulty studying for tests or quizzes",
+             "Homework taking longer",
+             "In class, work taking longer",
+             "Difficulty understanding new material",
+             "Difficulty taking notes")
+
+class_1_resp <- c("A lot worse",
+                  "Somewhat worse",
+                  "A little worse",
+                  "Not worse")
+
+class_self_1_tidy$Assessment <- factor(class_self_1_tidy$Assessment, levels = c("Pre-Test",
+                                                                                "Post-Test"))
+
+class_self_1_plot <- ggplot(class_self_1_tidy, aes(`Question`, `Response`)) +
+  geom_line(aes(group = `Question`), color = "gray40") +
+  geom_point(aes(color = `Assessment`)) +
+  coord_flip() +
+  scale_x_discrete(limits = class_1) +
+  scale_y_discrete(limits = class_1_resp) +
+  theme(panel.grid.major.y = element_blank(),
+        panel.grid.minor.x = element_blank(),
+        panel.grid.major.x = element_line(color = "gray80")) +
+  theme(plot.title = element_text(color = "black", size = 12, face = "bold", hjust = 0.5),
+        plot.subtitle = element_text(color = "black", size = 10, face = "bold"),
+        axis.text.x = element_text(size = 10, angle = 90),
+        axis.text.y = element_text(size = 10),
+        axis.title=element_text(size=10),
+        strip.text = element_text(size = 10),
+        plot.caption = element_text(size = 10),
+        legend.title = element_text(size = 12),
+        legend.text = element_text(size = 10),
+        legend.position = "bottom") +
+  labs(x = "",
+       y = "",
+    title = "CLASS Responses",
+       subtitle = "Questions 1-14")
+
+class_self_1_plot
+
+class_self_2_tidy <- class_self_2 %>% 
+  pivot_longer(
+    cols = c(`Pre-Test`, `Post-Test`),
+    names_to = "Assessment",
+    values_to = "Response"
+  )
+
+class_2 <- c("Stressed out about your grades dropping",
+             "More stressed out/overwhelmed with the schoolwork piling up",
+             "Not having enough support at home from parents/siblings",
+             "Not having enough support from teachers",
+             "Not being allowed to play sports/recreation",
+             "Missing time with friends and/or social activities")
+
+class_2_resp <- c("Very stressful",
+                  "Moderately stressful",
+                  "A little stressful",
+                  "Not stressful")
+
+class_self_2_tidy$Assessment <- factor(class_self_2_tidy$Assessment, levels = c("Pre-Test",
+                                                                                "Post-Test"))
+
+class_self_2_plot <- ggplot(class_self_2_tidy, aes(`Question`, `Response`)) +
+  geom_line(aes(group = `Question`), color = "gray40") +
+  geom_point(aes(color = `Assessment`)) +
+  coord_flip() +
+  scale_x_discrete(limits = class_2) +
+  scale_y_discrete(limits = class_2_resp) +
+  theme(panel.grid.major.y = element_blank(),
+        panel.grid.minor.x = element_blank(),
+        panel.grid.major.x = element_line(color = "gray80")) +
+  theme(plot.title = element_text(color = "black", size = 12, face = "bold", hjust = 0.5),
+        plot.subtitle = element_text(color = "black", size = 10, face = "bold"),
+        axis.text.x = element_text(size = 10, angle = 90),
+        axis.text.y = element_text(size = 10),
+        axis.title=element_text(size=10),
+        strip.text = element_text(size = 10),
+        plot.caption = element_text(size = 10),
+        legend.title = element_text(size = 12),
+        legend.text = element_text(size = 10),
+        legend.position = "bottom") +
+  labs(x = "",
+       y = "",
+    title = "CLASS Responses",
+       subtitle = "Questions 15-20")
+
+class_self_2_plot
+
+
+
+class_parent_1_tidy <- class_parent_1 %>% 
+  pivot_longer(
+    cols = c(`Pre-Test`, `Post-Test`),
+    names_to = "Assessment",
+    values_to = "Response"
+  )
+
+
+class_parent_1_tidy$Assessment <- factor(class_parent_1_tidy$Assessment, levels = c("Pre-Test",
+                                                                                    "Post-Test"))
+
+class_parent_1_plot <- ggplot(class_parent_1_tidy, aes(`Question`, `Response`)) +
+  geom_line(aes(group = `Question`), color = "gray40") +
+  geom_point(aes(color = `Assessment`)) +
+  coord_flip() +
+  scale_x_discrete(limits = class_1) +
+  scale_y_discrete(limits = class_1_resp) +
+  theme(panel.grid.major.y = element_blank(),
+        panel.grid.minor.x = element_blank(),
+        panel.grid.major.x = element_line(color = "gray80")) +
+  theme(plot.title = element_text(color = "black", size = 12, face = "bold", hjust = 0.5),
+        plot.subtitle = element_text(color = "black", size = 10, face = "bold"),
+        axis.text.x = element_text(size = 10, angle = 90),
+        axis.text.y = element_text(size = 10),
+        axis.title=element_text(size=10),
+        strip.text = element_text(size = 10),
+        plot.caption = element_text(size = 10),
+        legend.title = element_text(size = 12),
+        legend.text = element_text(size = 10),
+        legend.position = "bottom") +
+  labs(x = "",
+       y = "",
+    title = "CLASS Responses",
+       subtitle = "Questions 1-14")
+
+class_parent_1_plot
+
+class_parent_2_tidy <- class_parent_2 %>% 
+  pivot_longer(
+    cols = c(`Pre-Test`, `Post-Test`),
+    names_to = "Assessment",
+    values_to = "Response"
+  )
+
+class_parent_2_tidy$Assessment <- factor(class_parent_2_tidy$Assessment, levels = c("Pre-Test",
+                                                                                    "Post-Test"))
+
+class_parent_2_plot <- ggplot(class_parent_2_tidy, aes(`Question`, `Response`)) +
+  geom_line(aes(group = `Question`), color = "gray40") +
+  geom_point(aes(color = `Assessment`)) +
+  coord_flip() +
+  scale_x_discrete(limits = class_2) +
+  scale_y_discrete(limits = class_2_resp) +
+  theme(panel.grid.major.y = element_blank(),
+        panel.grid.minor.x = element_blank(),
+        panel.grid.major.x = element_line(color = "gray80")) +
+  theme(plot.title = element_text(color = "black", size = 12, face = "bold", hjust = 0.5),
+        plot.subtitle = element_text(color = "black", size = 10, face = "bold"),
+        axis.text.x = element_text(size = 10, angle = 90),
+        axis.text.y = element_text(size = 10),
+        axis.title=element_text(size=10),
+        strip.text = element_text(size = 10),
+        plot.caption = element_text(size = 10),
+        legend.title = element_text(size = 12),
+        legend.text = element_text(size = 10),
+        legend.position = "bottom") +
+  labs(x = "",
+       y = "",
+    title = "CLASS Responses",
+       subtitle = "Questions 15-20")
+
+class_parent_2_plot
+```
+
+### CLASS Self 1
+
+```{r, include=TRUE, fig.height=10, fig.width=10}
+class_self_1_plot
+```
+
+### CLASS Self 2
+
+```{r, include=TRUE, fig.height=10, fig.width=10}
+class_self_2_plot
+```
+
+### CLASS Parent 1
+
+```{r, include=TRUE, fig.height=10, fig.width=10}
+class_parent_1_plot
+```
+
+### CLASS parent 2
+
+```{r, include=TRUE, fig.height=10, fig.width=10}
+class_parent_2_plot
+```
