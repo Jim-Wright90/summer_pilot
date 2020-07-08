@@ -26,6 +26,8 @@ library(knitr)
 library(kableExtra)
 library(reactable)
 library(plotly)
+library(SCVA)
+
 
 theme_set(theme_minimal(15) +
             theme(legend.position = "bottom",
@@ -58,6 +60,8 @@ pcss <- import(here("data", "suma_pcss.xlsx"),
 hit <- import(here("data", "suma_hit.xlsx"),
                setclass = "tbl_df") 
 
+status <- import(here("data", "suma_status.xlsx"),
+               setclass = "tbl_df") 
 ```
 
 
@@ -143,13 +147,13 @@ brief_parent_plot
 
 ### BRIEF-2 Self-Report
 
-```{r, include=TRUE, fig.height=10, fig.width=10}
+```{r, include=TRUE, fig.height=8, fig.width=10}
 brief_self_plot
 ```
 
 ### BRIEF-2  Parent-Report
 
-```{r, include=TRUE, fig.height=10, fig.width=10}
+```{r, include=TRUE, fig.height=8, fig.width=10}
 brief_parent_plot
 ```
 
@@ -297,25 +301,25 @@ class_parent_2_plot
 
 ### CLASS Self 1
 
-```{r, include=TRUE, fig.height=10, fig.width=10}
+```{r, include=TRUE, fig.height=8, fig.width=10}
 class_self_1_plot
 ```
 
 ### CLASS Self 2
 
-```{r, include=TRUE, fig.height=10, fig.width=11}
+```{r, include=TRUE, fig.height=8, fig.width=11}
 class_self_2_plot
 ```
 
 ### CLASS Parent 1
 
-```{r, include=TRUE, fig.height=10, fig.width=10}
+```{r, include=TRUE, fig.height=8, fig.width=10}
 class_parent_1_plot
 ```
 
 ### CLASS parent 2
 
-```{r, include=TRUE, fig.height=10, fig.width=11}
+```{r, include=TRUE, fig.height=8, fig.width=11}
 class_parent_2_plot
 ```
 
@@ -340,7 +344,7 @@ pcss_table <- pcss %>%
     width = 500)
 ```
 
-```{r pcss table, include=TRUE, fig.height=10}
+```{r pcss table, include=TRUE, fig.height=8}
 pcss_table
 ```
 
@@ -372,6 +376,52 @@ hit_plot <- ggplot(hit, aes(measure, score)) +
 hit_plot
 ```
 
-```{r hit plot, include=TRUE, fig.height=10, fig.width=10}
+```{r hit plot, include=TRUE, fig.height=8, fig.width=8}
 hit_plot
+```
+
+
+# Repeated Measures 
+
+## Status {.tabset .tabset-fade .tabset-pills}
+
+```{r, include=FALSE}
+head(status)
+
+graph(design = "AB", 
+      data = status,
+      xlab = "Session Number",
+      ylab = "Weekly Tasks Completed",
+      ylim = c(0, 10),
+      labels = NULL)
+
+status_plot <- ggplot(status, aes(session, status)) +
+  geom_line() +
+  geom_point(size = 2) +
+  scale_x_continuous(limits = c(0, 6),
+                     breaks = c(1, 2, 3, 4, 5, 6)) +
+  scale_y_continuous(limits = c(0, 10),
+                     breaks = c(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10)) +
+  theme_classic() +
+  theme(plot.title = element_text(color = "black", face = "bold", hjust = 0.5)) +
+  labs(x = "Session",
+       y = "Weekly Tasks Completed",
+       title = "Status Tracking Goal") 
+```
+
+### SCVA Plot
+
+```{r, include=TRUE}
+graph(design = "AB", 
+      data = status,
+      xlab = "Session Number",
+      ylab = "Weekly Tasks Completed",
+      ylim = c(0, 10),
+      labels = NULL)
+```
+
+### GGplot Status
+
+```{r, include=TRUE}
+status_plot
 ```
