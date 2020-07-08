@@ -52,6 +52,12 @@ class_parent_1 <- import(here("data", "suma_class_parent_1.xlsx"),
 class_parent_2 <- import(here("data", "suma_class_parent_2.xlsx"),
                setclass = "tbl_df") 
 
+pcss <- import(here("data", "suma_pcss.xlsx"),
+               setclass = "tbl_df") 
+
+hit <- import(here("data", "suma_hit.xlsx"),
+               setclass = "tbl_df") 
+
 ```
 
 
@@ -311,4 +317,61 @@ class_parent_1_plot
 
 ```{r, include=TRUE, fig.height=10, fig.width=11}
 class_parent_2_plot
+```
+
+## PCSS
+
+```{r, include=FALSE}
+head(pcss)
+
+pcss_table <- pcss %>% 
+  reactable(
+    columns = list(
+      `Pre Test` = colDef(name = "Pre-Test"),
+      `Post Test` = colDef(name = "Post-Test")),
+    pagination = FALSE,
+    striped = TRUE,
+    outlined = TRUE,
+    compact = TRUE,
+    highlight = TRUE,
+    bordered = TRUE,
+    searchable = TRUE,
+    height = 600,
+    width = 500)
+```
+
+```{r pcss table, include=TRUE, fig.height=10}
+pcss_table
+```
+
+## HIT
+
+```{r, include=FALSE}
+head(hit)
+
+hit_positions <- c("Pre-Test", "Post-Test")
+
+hit_plot <- ggplot(hit, aes(measure, score)) +
+  geom_hline(yintercept = 50, 
+             linetype = "dashed",
+             size = 1) +
+  geom_col(fill = "blue", 
+           alpha = 0.7) +
+  scale_x_discrete(limits = hit_positions) +
+  scale_y_continuous(limits = c(0, 60),
+                     breaks = c(10, 20, 30, 40, 50, 60)) + 
+  geom_text(aes(measure, score, label = score),
+            nudge_y = -3,
+            color = "white") +
+  theme(plot.title = element_text(color = "black", face = "bold", hjust = 0.5)) +
+  labs(x = "",
+       y = "Score",
+       title = "HIT Results",
+       caption = "Score of 50 or Greater Suggest Headaches Impact Daily Functioning") 
+
+hit_plot
+```
+
+```{r hit plot, include=TRUE, fig.height=10, fig.width=10}
+hit_plot
 ```
