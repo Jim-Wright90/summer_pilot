@@ -68,6 +68,9 @@ productivity <- import(here("data", "suma_productivity.xlsx"),
 
 psychoeducation <- import(here("data", "suma_psychoeducation.xlsx"),
                setclass = "tbl_df") 
+
+rm <- import(here("data", "suma_rm.xlsx"),
+               setclass = "tbl_df") 
 ```
 
 
@@ -451,8 +454,8 @@ head(psychoeducation)
 psychoeducation_plot <- ggplot(psychoeducation, aes(session, pe)) +
   geom_line() +
   geom_point(size = 2) +
-  scale_x_continuous(limits = c(1, 5),
-                     breaks = c(1, 2, 3, 4, 5)) +
+  scale_x_continuous(limits = c(1, 3),
+                     breaks = c(1, 2, 3)) +
   scale_y_continuous(limits = c(0, 5),
                      breaks = c(1, 2, 3, 4, 5)) +
   theme_classic() +
@@ -466,6 +469,62 @@ psychoeducation_plot
 
 ```
 
-```{r p1 psychoeducation plot, include=TRUE}
+```{r psychoeducation plot, include=TRUE}
 psychoeducation_plot
+```
+
+## Frequency of Strategy Use
+```{r frequency, include=FALSE}
+head(rm)
+
+suma_freq <- rm %>% 
+  select(session, frequency)
+
+suma_freq_plot <- ggplot(suma_freq, aes(session, frequency)) +
+  geom_line() +
+  geom_point(size = 2) +
+  scale_x_continuous(limits = c(4, 6),
+                     breaks = c(4, 5, 6)) +
+  scale_y_continuous(limits = c(0, 10),
+                     breaks = c(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10)) +
+  theme_classic() +
+  theme(plot.title = element_text(color = "black", face = "bold", hjust = 0.5)) +
+  labs(x = "Session",
+       y = "Number of Tasks",
+       title = "Weekly Number of Tasks Entered into Planner") 
+  
+suma_freq_plot
+
+```
+
+```{r frequency plot, include=TRUE}
+suma_freq_plot
+```
+
+## Perceived Strategy Helpfulness 
+
+```{r helpfulness, include=FALSE}
+suma_help <- rm %>% 
+  select(session, help)
+
+suma_help_plot <- ggplot(suma_help, aes(session, help)) +
+  geom_line() +
+  geom_point(size = 2) +
+  scale_x_continuous(limits = c(4, 6),
+                     breaks = c(4, 5, 6)) +
+  scale_y_continuous(limits = c(0, 5),
+                     breaks = c(1, 2, 3, 4, 5)) +
+  theme_classic() +
+  theme(plot.title = element_text(color = "black", face = "bold", hjust = 0.5)) +
+  labs(x = "Session",
+       y = "Level of Helpfulness",
+       title = "Perceived Helpfulness of Planner",
+       caption = "1 = Not Helpful at All\n 2 = Not Helpful\n 3 = Somewhat Helpful\n 4 = Helpful\n 5 = Very Helpful") 
+
+suma_help_plot
+  
+```
+
+```{r helpfulness plot, include=TRUE}
+suma_help_plot
 ```
