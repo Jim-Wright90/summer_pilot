@@ -63,7 +63,13 @@ hit <- import(here("data", "suma_hit.xlsx"),
 status <- import(here("data", "suma_status.xlsx"),
                setclass = "tbl_df") 
 
+status2 <- import(here("data", "suma_status2.xlsx"),
+               setclass = "tbl_df") 
+
 productivity <- import(here("data", "suma_productivity.xlsx"),
+               setclass = "tbl_df") 
+
+productivity2 <- import(here("data", "suma_productivity2.xlsx"),
                setclass = "tbl_df") 
 
 psychoeducation <- import(here("data", "suma_psychoeducation.xlsx"),
@@ -409,13 +415,32 @@ status_plot <- ggplot(status, aes(session, status)) +
   geom_point(size = 2) +
   scale_x_continuous(limits = c(0, 6),
                      breaks = c(1, 2, 3, 4, 5, 6)) +
-  scale_y_continuous(limits = c(0, 10),
-                     breaks = c(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10)) +
+  scale_y_continuous(limits = c(0, 12),
+                     breaks = c(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)) +
   theme_classic() +
   theme(plot.title = element_text(color = "black", face = "bold", hjust = 0.5)) +
   labs(x = "Session",
        y = "Weekly Tasks Completed",
        title = "Status Tracking Goal") 
+
+head(status2)
+
+status_plot2 <- ggplot() +
+  geom_line(data = status2, aes(x = session, y = bl)) +
+  geom_point(data = status2, aes(x = session, y = bl), size = 2) +
+  geom_line(data = status2, aes(x = session, y = tx)) +
+  geom_point(data = status2, aes(x = session, y = tx), size = 2) +
+  scale_x_continuous(limits = c(0, 6),
+                     breaks = c(1, 2, 3, 4, 5, 6)) +
+  scale_y_continuous(limits = c(0, 12),
+                     breaks = c(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)) +
+  theme_classic() +
+  theme(plot.title = element_text(color = "black", face = "bold", hjust = 0.5)) +
+  labs(x = "Session",
+       y = "Weekly Tasks Completed",
+       title = "Status Tracking Goal") 
+
+status_plot2
 
 head(productivity)
 
@@ -432,18 +457,51 @@ productivity_plot <- ggplot(productivity, aes(session, product)) +
        y = "Level of Perception",
        title = "Perception of Weekly Productivity",
        caption = "1 = completed none of the tasks I wanted to\n 2 = completed not enough of the tasks I wanted to\n 3 = completed some of the tasks I wanted to\n 4 = completed most but not all of the tasks I wanted to\n 5 = completed all of the tasks I wanted to") 
+
+
+head(productivity2)
+
+productivity_plot2 <- ggplot() +
+  geom_line(data = productivity2, aes(x = session, y = bl)) +
+  geom_point(data = productivity2, aes(x = session, y = bl), size = 2) +
+  geom_line(data = productivity2, aes(x = session, y = tx)) +
+  geom_point(data = productivity2, aes(x = session, y = tx), size = 2) +
+  scale_x_continuous(limits = c(0, 6),
+                     breaks = c(1, 2, 3, 4, 5, 6)) +
+  scale_y_continuous(limits = c(0, 5),
+                     breaks = c(0, 1, 2, 3, 4, 5)) +
+  theme_classic() +
+  theme(plot.title = element_text(color = "black", face = "bold", hjust = 0.5)) +
+  labs(x = "Session",
+       y = "Level of Perception",
+       title = "Perception of Weekly Productivity",
+       caption = "1 = completed none of the tasks I wanted to\n 2 = completed not enough of the tasks I wanted to\n 3 = completed some of the tasks I wanted to\n 4 = completed most but not all of the tasks I wanted to\n 5 = completed all of the tasks I wanted to") 
+
+productivity_plot2
 ```
 
-### GGplot Status
+### Status Plot 1
 
 ```{r, include=TRUE}
 status_plot
+```
+
+### Status Plot 2
+
+```{r, include=TRUE}
+status_plot2
 ```
 
 ### Productivity Perception Plot
 
 ```{r, include=TRUE}
 productivity_plot
+```
+
+### Productivity Perception Plot 2
+
+```{r, include=TRUE}
+productivity_plot2
 ```
 
 ## Psychoeducation Plot
