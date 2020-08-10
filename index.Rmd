@@ -66,6 +66,9 @@ status <- import(here("data", "suma_status.xlsx"),
 status2 <- import(here("data", "suma_status2.xlsx"),
                setclass = "tbl_df") 
 
+gas <- import(here("data", "suma_gas.xlsx"),
+               setclass = "tbl_df") 
+
 productivity <- import(here("data", "suma_productivity.xlsx"),
                setclass = "tbl_df") 
 
@@ -81,6 +84,28 @@ rm <- import(here("data", "suma_rm.xlsx"),
 
 
 # Outcome Measures 
+
+## GAS Hierarchy - Number of tasks completed per week
+
+```{r, include=FALSE}
+head(gas)
+
+gas_tbl <- gas %>% 
+  reactable(columns = list(
+    Level = colDef(align = "center"),
+    Outcome = colDef(align = "center")),
+    striped = TRUE,
+    outlined = TRUE,
+    compact = TRUE,
+    highlight = TRUE,
+    bordered = TRUE,
+    height = 400,
+    width = 500)
+```
+
+```{r, include=TRUE}
+gas_tbl
+```
 
 ## BRIEF-2 {.tabset .tabset-fade .tabset-pills}
 
