@@ -568,8 +568,8 @@ suma_freq_plot <- ggplot(suma_freq, aes(session, frequency)) +
   geom_point(size = 2) +
   scale_x_continuous(limits = c(4, 6),
                      breaks = c(4, 5, 6)) +
-  scale_y_continuous(limits = c(0, 12),
-                     breaks = c(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)) +
+  scale_y_continuous(limits = c(0, 20),
+                     breaks = c(0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20)) +
   theme_classic() +
   theme(plot.title = element_text(color = "black", face = "bold", hjust = 0.5)) +
   labs(x = "Session",
